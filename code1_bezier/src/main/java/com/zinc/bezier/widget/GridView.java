@@ -1,4 +1,4 @@
-package com.zinc.lib_base;
+package com.zinc.bezier.widget;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -11,11 +11,15 @@ import android.util.DisplayMetrics;
 import android.view.View;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/12/6
- * @description
+ * *
+ * *
+ * Project_Name:UI2018
+ *
+ * @author zhangxc
+ * @date 2020-02-12 15:53
+ * *
  */
-public abstract class BaseView extends View {
+public class GridView extends View {
 
     protected String TAG = this.getClass().getSimpleName();
 
@@ -31,7 +35,7 @@ public abstract class BaseView extends View {
     private int mGridColor;
 
     // 网格宽度 50px
-    private int mGridWidth = 50;
+    private int mGridWidth = 150;
 
     // 坐标线宽度
     private final float mCoordinateLineWidth = 2.5f;
@@ -46,19 +50,20 @@ public abstract class BaseView extends View {
     protected float mWidth;
     protected float mHeight;
 
-    public BaseView(Context context) {
+
+    public GridView(Context context) {
         this(context, null, 0);
     }
 
-    public BaseView(Context context, @Nullable AttributeSet attrs) {
+    public GridView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public BaseView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public GridView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initCoordinate(context);
-        init(context);
     }
+
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -67,6 +72,12 @@ public abstract class BaseView extends View {
         mWidth = getMeasuredWidth();
         mHeight = getMeasuredHeight();
     }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        drawCoordinate(canvas);
+    }
+
 
     protected void initCoordinate(Context context) {
         mCoordinateColor = Color.BLACK;
@@ -91,8 +102,6 @@ public abstract class BaseView extends View {
         mTextPaint.setTextSize(mTextSize);
     }
 
-    protected abstract void init(Context context);
-
     /**
      * 画坐标和网格，以画布中心点为原点
      *
@@ -110,16 +119,17 @@ public abstract class BaseView extends View {
         // 画竖线
         while (curWidth < halfWidth + mGridWidth) {
 
-            // 向上
+            // 向上画
             canvas.drawLine(curWidth, -halfHeight, curWidth, halfHeight, mGridPaint);
-            // 向下
+            // 向下画
             canvas.drawLine(-curWidth, -halfHeight, -curWidth, halfHeight, mGridPaint);
 
-            // 画标柱
-            canvas.drawLine(curWidth, 0, curWidth, -mCoordinateFlagHeight, mCoordinatePaint);
-            canvas.drawLine(-curWidth, 0, -curWidth, -mCoordinateFlagHeight, mCoordinatePaint);
 
-            // 标柱宽度（每两个画一个）
+            // 画标柱
+            canvas.drawLine(0, curWidth, mCoordinateFlagHeight, curWidth, mCoordinatePaint);
+            canvas.drawLine(0, -curWidth, mCoordinateFlagHeight, -curWidth, mCoordinatePaint);
+
+            // 标柱宽度（每两个画一个）sca:刻度
             if (curWidth % (mGridWidth * 2) == 0) {
                 canvas.drawText(curWidth + "", curWidth, mTextSize * 1.5f, mTextPaint);
                 canvas.drawText(-curWidth + "", -curWidth, mTextSize * 1.5f, mTextPaint);
@@ -137,9 +147,10 @@ public abstract class BaseView extends View {
             // 向左画
             canvas.drawLine(-halfWidth, -curHeight, halfWidth, -curHeight, mGridPaint);
 
-            // 画标柱
-            canvas.drawLine(0, curHeight, mCoordinateFlagHeight, curHeight, mCoordinatePaint);
-            canvas.drawLine(0, -curHeight, mCoordinateFlagHeight, -curHeight, mCoordinatePaint);
+            // 画标柱（x 轴sca:刻度）
+            canvas.drawLine(curHeight, 0, curHeight, -mCoordinateFlagHeight, mCoordinatePaint);
+            canvas.drawLine(-curHeight, 0, -curHeight, -mCoordinateFlagHeight, mCoordinatePaint);
+
 
             // 标柱宽度（每两个画一个）
             if (curHeight % (mGridWidth * 2) == 0) {
@@ -156,6 +167,7 @@ public abstract class BaseView extends View {
         canvas.drawLine(0, halfHeight, mWidth, halfHeight, mCoordinatePaint);
 
     }
+
 
     /**
      * 转换 sp 至 px

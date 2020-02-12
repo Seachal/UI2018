@@ -29,4 +29,9 @@
         android:onClick="stickPoint"
         android:text="粘性小红点" />
 
+    <TextView
+        style="@style/textview_button"
+        android:onClick="gridView"
+        android:text="sc:坐标网格" />
+
 </LinearLayout>

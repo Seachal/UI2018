@@ -10,6 +10,8 @@ import java.util.List;
  * @author Jiang zinc
  * @date 创建时间：2019/1/5
  * @description 贝塞尔曲线工具
+ * <p>
+ * sca:  https://juejin.im/post/5c3988516fb9a049d1325c83
  */
 public class BezierUtils {
 
@@ -19,7 +21,7 @@ public class BezierUtils {
     public static final int Y_TYPE = 2;
 
     /**
-     * 构建贝塞尔曲线，具体点数由 参数frame 决定
+     * 构建贝塞尔曲线，具体点数由 参数frame 决定，    //sca： 帧数：1000，即1000个点来绘制一条线
      *
      * @param controlPointList 控制点的坐标
      * @param frame            帧数
@@ -54,6 +56,8 @@ public class BezierUtils {
      * @param p                当前坐标（具体为 x轴 或 y轴）
      * @param controlPointList 控制点的坐标
      * @return
+     *
+     * IntRange 注解的 from ,to 标识范围。
      */
     public static float calculatePointCoordinate(@IntRange(from = X_TYPE, to = Y_TYPE) int type,
                                                  float u,
@@ -63,7 +67,7 @@ public class BezierUtils {
 
         /**
          * 公式解说：（p表示坐标点，后面的数字只是区分）
-         * 场景：有一条线p1到p2，p0在中间，求p0的坐标
+         * 场景：有一条线p1到p2，p0在中间，求p0的坐标（sca: x轴）
          *      p1◉--------○----------------◉p2
          *            u    p0
          *

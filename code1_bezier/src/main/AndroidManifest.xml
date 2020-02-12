@@ -8,6 +8,8 @@
         <activity android:name="com.zinc.bezier.activity.DIYBezierActivity" />
         <activity android:name="com.zinc.bezier.activity.HeartActivity" />
         <activity android:name="com.zinc.bezier.activity.StickDotActivity"/>
+
+        <activity android:name="com.zinc.bezier.activity.GridActivity"/>
     </application>
 
 </manifest>

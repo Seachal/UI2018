@@ -40,4 +40,9 @@ public class ClientActivity extends AppCompatActivity {
     public void changeToHeart(View view) {
         startActivity(new Intent(this, HeartActivity.class));
     }
+
+    public void gridView(View view) {
+        startActivity(new Intent(this, GridActivity.class));
+    }
+
 }
