@@ -25,8 +25,10 @@ public class HeartView extends BaseView {
     private Path mPath;
     private Paint mPaint;
 
+//    绘制新型图形的控制点集合
     private List<PointF> mHeartPointList;
 
+//    sca: 绘制圆的控制点集合
     private List<PointF> mCirclePointList;
 
     private List<PointF> mCurPointList;
@@ -68,6 +70,9 @@ public class HeartView extends BaseView {
         mHeartPointList.add(new PointF(dpToPx(-112), dpToPx(-61)));
         mHeartPointList.add(new PointF(dpToPx(-50), dpToPx(-103)));
 
+
+//        初始化时，  mCurPointList 和 mCurPointList的 add 值都是一样的。
+
         mCirclePointList = new ArrayList<>();
         mCirclePointList.add(new PointF(0, dpToPx(-89)));
         mCirclePointList.add(new PointF(dpToPx(50), dpToPx(-89)));
@@ -102,9 +107,12 @@ public class HeartView extends BaseView {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
 
+                //<editor-fold desc="弹性效果公式">
                 float x = (float) animation.getAnimatedValue();
                 float factor = 0.15f;
                 double value = Math.pow(2, -10 * x) * Math.sin((x - factor / 4) * (2 * Math.PI) / factor) + 1;
+                //</editor-fold>
+//                double value = 1;
 
                 for (int i = 0; i < mCurPointList.size(); ++i) {
 
@@ -116,6 +124,7 @@ public class HeartView extends BaseView {
 
                 }
 
+//             ## sca: 通过动画改变 mCurPointList 中的值后，用 postInvalidate去调用onDraw 。
                 postInvalidate();
             }
         });

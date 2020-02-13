@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -25,6 +26,8 @@ public class GridView extends View {
 
     // 坐标画笔
     private Paint mCoordinatePaint;
+    // 贝塞尔曲线画笔
+    private Paint mBPaint;
     // 网格画笔
     private Paint mGridPaint;
     // 写字画笔
@@ -76,6 +79,7 @@ public class GridView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         drawCoordinate(canvas);
+        drawBezier(canvas);
     }
 
 
@@ -100,6 +104,12 @@ public class GridView extends View {
         mTextPaint.setColor(mCoordinateColor);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextPaint.setTextSize(mTextSize);
+
+
+        mBPaint = new Paint();
+        mBPaint.setAntiAlias(true);
+        mBPaint.setColor(Color.RED);
+        mBPaint.setStrokeWidth(1f);
     }
 
     /**
@@ -114,6 +124,7 @@ public class GridView extends View {
 
         // 画网格
         canvas.save();
+//        画布向右下角平移
         canvas.translate(halfWidth, halfHeight);
         int curWidth = mGridWidth;
         // 画竖线
@@ -165,6 +176,28 @@ public class GridView extends View {
         // 画 x，y 轴
         canvas.drawLine(halfWidth, 0, halfWidth, mHeight, mCoordinatePaint);
         canvas.drawLine(0, halfHeight, mWidth, halfHeight, mCoordinatePaint);
+
+    }
+
+
+    private void drawBezier(Canvas canvas) {
+        float halfWidth = mWidth / 2;
+        float halfHeight = mHeight / 2;
+
+
+        // 画网格
+        canvas.save();
+//        画布向右下角平移
+        canvas.translate(halfWidth, halfHeight);
+        // 初始化 路径对象
+        Path path = new Path();
+        // 移动至第一个控制点 A(ax,ay)
+        path.moveTo(0, 0);
+        // 填充三阶贝塞尔曲线的另外三个控制点：
+        // B(bx,by) C(cx,cy) D(dx,dy) 切记顺序不能变
+        path.cubicTo(300, 0, 300, 300, 0, 300);
+        // 将 贝塞尔曲线 绘制至画布
+        canvas.drawPath(path, mBPaint);
 
     }
 

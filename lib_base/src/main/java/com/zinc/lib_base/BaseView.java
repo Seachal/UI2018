@@ -28,6 +28,7 @@ public abstract class BaseView extends View {
 
     // 坐标颜色
     private int mCoordinateColor;
+//    网格颜色
     private int mGridColor;
 
     // 网格宽度 50px
@@ -105,6 +106,7 @@ public abstract class BaseView extends View {
 
         // 画网格
         canvas.save();
+//        sca:画布平移
         canvas.translate(halfWidth, halfHeight);
         int curWidth = mGridWidth;
         // 画竖线

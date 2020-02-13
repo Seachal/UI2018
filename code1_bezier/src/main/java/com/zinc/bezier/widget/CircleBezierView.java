@@ -79,6 +79,7 @@ public class CircleBezierView extends BaseView {
 
         LINE_WIDTH = dpToPx(2);
 
+//        sca: 因为 onDraw 中canvas.translate(mWidth / 2, mHeight / 2); 坐标原点（0，0）已经变为 view 的中点
         mCenterPoint = new PointF(0, 0);
 
         mControlPointList = new ArrayList<>();
@@ -134,15 +135,16 @@ public class CircleBezierView extends BaseView {
                 endPointIndex = i * 3 + 3;
             }
 
+//            sca:绘制三阶贝塞尔曲线，
             mPath.cubicTo(mControlPointList.get(i * 3 + 1).x, mControlPointList.get(i * 3 + 1).y,
                     mControlPointList.get(i * 3 + 2).x, mControlPointList.get(i * 3 + 2).y,
                     mControlPointList.get(endPointIndex).x, mControlPointList.get(endPointIndex).y);
         }
 
-        // 绘制贝塞尔曲线
+        // 绘制贝塞尔曲线，  绘制的是有填充的图形。
         canvas.drawPath(mPath, mPaint);
 
-        // 绘制圆
+        // 绘制圆 sca: 绘制的是红色圆环
         canvas.drawCircle(mCenterPoint.x, mCenterPoint.y, mRadius, mCirclePaint);
 
         // 绘制控制线
@@ -167,7 +169,7 @@ public class CircleBezierView extends BaseView {
     }
 
     /**
-     * 计算圆的控制点
+     * 计算圆的控制点,  sca：点的个数是 4 组 12 个。
      */
     private void calculateControlPoint() {
         // 计算 中间控制点到端点的距离
@@ -197,3 +199,7 @@ public class CircleBezierView extends BaseView {
     }
 
 }
+
+/**
+ *  贝塞尔曲线绘制圆，重点是比例，比例在 0.56
+ */
