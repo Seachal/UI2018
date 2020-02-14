@@ -47,6 +47,7 @@ public class LoadingView extends BaseView {
         mPath.addCircle(0, 0, 100, Path.Direction.CCW);
 
         mPathMeasure = new PathMeasure();
+//        forceClosed 为 false 测量的是当前 Path 状态的长度， forceClosed 为 true，则不论Path是否闭合测量的都是 Path 的闭合长度。
         mPathMeasure.setPath(mPath, true);
         mLength = mPathMeasure.getLength();
 
@@ -61,6 +62,7 @@ public class LoadingView extends BaseView {
             }
         });
         valueAnimator.setDuration(2000);
+//        infinite 无限的，即循环。
         valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
         valueAnimator.start();
     }
@@ -78,7 +80,9 @@ public class LoadingView extends BaseView {
         mDst.lineTo(0, 0);
 
         float stop = mLength * mAnimatorValue;
+//       sca: 当 0 <mAnimatorValue< 0.5也就是，上半圆时，star一直是 0，stop 一直在增加。当mAnimatorValue>0.5时，进入下半圆，stop在增加， start在减少
         float start = (float) (stop - ((0.5 - Math.abs(mAnimatorValue - 0.5)) * mLength));
+//        sca: 从  start, stop 截取的片段，添加到mDst，  然后，绘制mDst
         mPathMeasure.getSegment(start, stop, mDst, true);
 
         canvas.drawPath(mDst, mPaint);

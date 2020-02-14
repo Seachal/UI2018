@@ -60,6 +60,7 @@ public class PlaneLoadingView extends BaseView {
 
     public PlaneLoadingView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
     }
 
     protected void init(Context context) {
@@ -80,6 +81,7 @@ public class PlaneLoadingView extends BaseView {
         // 初始化 装载 坐标 和 正余弦 的数组
         mPos = new float[2];
         mTan = new float[2];
+        Log.i("PlaneLoadingView_1i", "------------pos[0] = " + mPos[0] + "; pos[1] = " + mPos[1]);
 
         // 初始化 PathMeasure 并且关联 圆路径
         mPathMeasure = new PathMeasure();
@@ -97,8 +99,10 @@ public class PlaneLoadingView extends BaseView {
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
+//                sca: A1
                 // 第一种做法：通过自己控制，是箭头在原来的位置继续运行
                 mCurrentValue += DELAY;
+//               sca: 当mCurrentValue大于等于 1 时（转完一圈），重置
                 if (mCurrentValue >= 1) {
                     mCurrentValue -= 1;
                 }
@@ -106,6 +110,7 @@ public class PlaneLoadingView extends BaseView {
                 // 第二种做法：直接获取可以通过估值器，改变其变动规律
 //                mCurrentValue = (float) animation.getAnimatedValue();
 
+//               sca:  使用此方法分时段重绘
                 invalidate();
             }
         });
@@ -122,6 +127,9 @@ public class PlaneLoadingView extends BaseView {
         // 画圆路径
         canvas.drawPath(mCirclePath, mCirclePaint);
 
+//       sca:
+        Log.i("PlaneLoadingView_1——p", "------------pos[0] = " + mPos[0] + "; pos[1] = " + mPos[1]);
+
         // 测量 pos(坐标) 和 tan(正切)
         mPathMeasure.getPosTan(mPathMeasure.getLength() * mCurrentValue, mPos, mTan);
 
@@ -135,19 +143,22 @@ public class PlaneLoadingView extends BaseView {
 
         // 重置矩阵
         mMatrix.reset();
-        // 设置旋转角度
+        // 设置旋转角度  sca: a0-以图片的中心点进行旋转 ,a1 - 注释掉这行代码，箭头的方向就沿运动方向变化，一直指向右侧 。
         mMatrix.postRotate(degree, mArrowBitmap.getWidth() / 2, mArrowBitmap.getHeight() / 2);
-        // 设置偏移量
+        // 设置偏移量,  sca： 平移并设置偏移量，因为直接绘制的话，箭头会在轨道之外做圆环运动。，需要挪动箭头的宽和高各一半。
         mMatrix.postTranslate(mPos[0] - mArrowBitmap.getWidth() / 2,
                 mPos[1] - mArrowBitmap.getHeight() / 2);
 
-        // 画原点
+//        mPos的点一直在变化，所以，发生了箭头沿圆运动，
+//        mMatrix.postTranslate(mPos[0] , mPos[1]);
+
+        // 画原点， sca: 坐标原点
         canvas.drawCircle(0, 0, 3, mCirclePaint);
 
-        // 画箭头，使用矩阵旋转
+        // 画箭头，使用矩阵旋转，  sca: 箭头沿圆边沿上运动
         canvas.drawBitmap(mArrowBitmap, mMatrix, mCirclePaint);
 
-        // 画在 箭头 图标的中心点
+        // 画在 箭头 图标的中心点，  一个在圆边沿上运动的小红点
         canvas.drawCircle(mPos[0], mPos[1], 3, mCirclePaint);
 
     }
@@ -161,3 +172,11 @@ public class PlaneLoadingView extends BaseView {
     }
 
 }
+
+/**
+ * 实现思路，
+ *  1 在属性动画中设置 1 个 区间0-1的变化比例值，
+ *  2. mPathMeasure.getPosTan(mPathMeasure.getLength() * mCurrentValue, mPos, mTan);  根据变化的mCurrentValue 计算出，变化的角度 和 坐标。
+ *  3. 有了 角度和坐标，就可以移动 箭头的位置和 （箭头方向的角度）
+ *  4.  运动的方向跟 圆的路径顺时针和逆时针有关。   mCirclePath.addCircle(0, 0, 200, Path.Direction.CW);
+ */

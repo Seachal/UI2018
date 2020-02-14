@@ -8,7 +8,7 @@ import android.view.View;
 import com.zinc.pathmeasure.GetSegmentView;
 import com.zinc.pathmeasure.R;
 
-/**
+/**get_Segment测试
  * @author Jiang zinc
  * @date 创建时间：2019/1/4
  * @description

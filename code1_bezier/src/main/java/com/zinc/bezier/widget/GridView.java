@@ -106,10 +106,14 @@ public class GridView extends View {
         mTextPaint.setTextSize(mTextSize);
 
 
+
+//       贝塞尔曲线，
         mBPaint = new Paint();
         mBPaint.setAntiAlias(true);
         mBPaint.setColor(Color.RED);
         mBPaint.setStrokeWidth(1f);
+//      sca:  增加此行代码是画线，不增加此行代码是画面
+        mBPaint.setStyle(Paint.Style.STROKE);
     }
 
     /**

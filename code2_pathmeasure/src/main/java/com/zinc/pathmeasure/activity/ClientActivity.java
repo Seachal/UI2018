@@ -32,25 +32,31 @@ public class ClientActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onGetLength(View view) {
+        Intent intent = new Intent(this, CommonActivity.class);
+        intent.putExtra(CommonActivity.TYPE, CommonActivity.GET_LENGTH);
+        startActivity(intent);
+    }
+
+
+//    实战——旋转的小箭头
     public void onArrow(View view) {
         Intent intent = new Intent(this, PlaneLoadingActivity.class);
         startActivity(intent);
     }
 
+//    实战——粘性loading
     public void onLoading(View view) {
         Intent intent = new Intent(this, CommonActivity.class);
         intent.putExtra(CommonActivity.TYPE, CommonActivity.LOADING);
         startActivity(intent);
     }
 
+//    实战-乘风破浪的小船
     public void onBoat(View view) {
         Intent intent = new Intent(this, BoatLoadingActivity.class);
         startActivity(intent);
     }
 
-    public void onGetLength(View view) {
-        Intent intent = new Intent(this, CommonActivity.class);
-        intent.putExtra(CommonActivity.TYPE, CommonActivity.GET_LENGTH);
-        startActivity(intent);
-    }
+
 }

@@ -9,7 +9,8 @@ import com.zinc.pathmeasure.NextCounterView;
 import com.zinc.pathmeasure.LoadingView;
 
 /**
- *
+ * sca: 基础 Api
+ *     get_Length测试
  * @author Jiang zinc
  * @date 创建时间：2019/1/4
  * @description
@@ -31,12 +32,14 @@ public class CommonActivity extends AppCompatActivity {
         mType = getIntent().getStringExtra(TYPE);
 
         switch (mType) {
+//            基础 api
             case ABC:
                 setContentView(new NextCounterView(this));
                 break;
             case LOADING:
                 setContentView(new LoadingView(this));
                 break;
+//                获取长度
             case GET_LENGTH:
                 setContentView(new GetLengthView(this));
                 break;
