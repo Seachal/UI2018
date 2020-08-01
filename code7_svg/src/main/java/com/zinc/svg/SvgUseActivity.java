@@ -34,10 +34,12 @@ public class SvgUseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    sca: 使用 menu目录下的 menu.xml 文件中的动画
                     ((Animatable) img1.getDrawable()).start();
                 } else {
                     img1.setImageDrawable(
                             ContextCompat.getDrawable(SvgUseActivity.this, R.drawable.ic_back));
+
                 }
             }
         });

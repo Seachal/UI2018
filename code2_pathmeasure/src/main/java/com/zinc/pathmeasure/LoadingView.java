@@ -88,3 +88,8 @@ public class LoadingView extends BaseView {
         canvas.drawPath(mDst, mPaint);
     }
 }
+
+
+/**
+ * //       sca: 当 0 <mAnimatorValue< 0.5也就是，上半圆时，star一直是 0，stop 一直在增加。当mAnimatorValue>0.5时，进入下半圆，stop在增加， start在减少
+ * */
