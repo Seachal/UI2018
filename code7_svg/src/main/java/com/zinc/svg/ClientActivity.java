@@ -15,6 +15,8 @@ import android.widget.TextView;
 public class ClientActivity extends Activity implements View.OnClickListener {
 
     private TextView tvSvgUse;
+    private TextView tvSvgUse2;
+
     private TextView tvSvgJueJin;
     private TextView tvSvgMap;
 
@@ -24,6 +26,8 @@ public class ClientActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_svg_client);
 
         tvSvgUse = findViewById(R.id.tv_svg_use);
+        tvSvgUse2 = findViewById(R.id.tv_svg_use_2);
+
         tvSvgJueJin = findViewById(R.id.tv_svg_jue_jin);
         tvSvgMap = findViewById(R.id.tv_svg_map);
 
@@ -40,7 +44,10 @@ public class ClientActivity extends Activity implements View.OnClickListener {
         int i = v.getId();
         if (i == R.id.tv_svg_use) {
             intent = new Intent(this, SvgUseActivity.class);
-        } else if (i == R.id.tv_svg_jue_jin) {
+        } else if (i == R.id.tv_svg_use){
+            intent = new Intent(this, SvgUseActivity2.class);
+        }
+        else if (i == R.id.tv_svg_jue_jin) {
             intent = new Intent(this, JueJinAnimActivity.class);
         } else if (i == R.id.tv_svg_map) {
             intent = new Intent(this, SvgMapActivity.class);
