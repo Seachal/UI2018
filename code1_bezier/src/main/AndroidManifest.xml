@@ -2,6 +2,8 @@
     package="com.zinc.bezier">
 
     <application>
+
+<!--        入口 -->
         <activity android:name="com.zinc.bezier.activity.ClientActivity" />
         <activity android:name="com.zinc.bezier.activity.BezierActivity" />
         <activity android:name="com.zinc.bezier.activity.CircleActivity" />

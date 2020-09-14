@@ -160,10 +160,13 @@ public class ShoppingView extends android.support.v7.widget.AppCompatImageView {
 
         }
 
+//       sca:  差值器 影响 动画变化速率 ，  估值器影响 动画具体的值。
         @Override
         public PointF evaluate(float fraction, PointF startPoint, PointF endPoint) {
             return new PointF(BezierUtils.calculatePointCoordinate(BezierUtils.X_TYPE, fraction, 2, 0, pointList),
                     BezierUtils.calculatePointCoordinate(BezierUtils.Y_TYPE, fraction, 2, 0, pointList));
+
+//            return new PointF(0,fraction);
         }
     }
 

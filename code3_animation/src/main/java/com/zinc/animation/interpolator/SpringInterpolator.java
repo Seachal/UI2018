@@ -6,6 +6,8 @@ import android.animation.TimeInterpolator;
  * @author Jiang zinc
  * @date 创建时间：2019/1/27
  * @description 震旦效果
+ *
+ * 自定义插值器， 其实定义一个数据函数公式。
  */
 public class SpringInterpolator implements TimeInterpolator {
 

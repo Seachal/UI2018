@@ -181,6 +181,9 @@ public class TimeInterpolatorActivity extends AppCompatActivity implements TimeI
 
     /**
      * 初始化插值器，需要的可以在这里添加自己的插值器
+     *
+     *
+     *
      */
     private void buildInterpolatorList() {
         interpolatorList.clear();
