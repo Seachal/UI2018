@@ -80,6 +80,7 @@ public class GridView extends View {
     protected void onDraw(Canvas canvas) {
         drawCoordinate(canvas);
         drawBezier(canvas);
+        drawLineToAndQuadto(canvas);
     }
 
 
@@ -226,6 +227,25 @@ public class GridView extends View {
     protected int dpToPx(float dpValue) {
         DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
         return (int) (dpValue * metrics.density + 0.5f);
+    }
+
+
+//    成功绘制出一条曲线， 纸上得来终觉浅，敲一敲才会更健康
+    private  void   drawLineToAndQuadto(Canvas canvas){
+        // 初始化 路径对象
+        Path path = new Path();
+        // 移动至第一个控制点 A(ax,ay)
+        path.lineTo(10, 100);
+        path.lineTo(100, 100);
+        // 填充二阶贝塞尔曲线的另外两个控制点 B(bx,by) 和 C(cx,cy)，切记顺序不能变
+        path.quadTo(140, 100, 160, 60);
+        path.quadTo(200,0, 240,60);
+        path.quadTo(260,100, 300,100);
+        path.lineTo(400, 100);
+
+        // 将 贝塞尔曲线 绘制至画布
+        canvas.drawPath(path, mBPaint);
+
     }
 
 }
